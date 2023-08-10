@@ -79,7 +79,7 @@ class Program
                         Console.Clear();
                         Console.WriteLine("Kontaktinfo: ");
                         Customer customer = customers[customerNumber];
-                        Console.WriteLine("Navn: {0}\nKontaktinfo: {1}", customer.FirstName, customer.kontraktinfo);
+                        Console.WriteLine("Navn: {0}\nKontaktinfo: {1}", customer.FirstName, customer.Phone);
                         //Console.WriteLine("Registrerede biler: ");
                         /*foreach (Car cars in ShowCar.bil)
                         {
