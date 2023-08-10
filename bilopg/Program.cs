@@ -1,21 +1,4 @@
-﻿class Car
-{
-    public string lave { get; set; }
-    public string Model { get; set; }
-    public string Nummerplade { get; set; }
-    public string Mærke { get; set; }
-    public string Størrelse { get; set; }
-    public string Dato { get; set; }
-}
-
-class Customer
-{
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string kontraktinfo { get; set; }
-    public List<Car> bil { get; } = new List<Car>();
-}
-
+﻿
 class Program
 {
     static void Main(string[] args)
@@ -46,7 +29,7 @@ class Program
 
 
                     Customer newCustomer = new Customer();
-                    Car newCar = new Car();
+                    Vehicle newCar = new Vehicle("", "", "");
 
                     Console.Write("Indtast kundens FirstName: ");
                     newCustomer.FirstName = Console.ReadLine();
@@ -55,7 +38,7 @@ class Program
                     newCustomer.LastName = Console.ReadLine();
 
                     Console.Write("Indtast kundens kontaktoplysninger: ");
-                    newCustomer.kontraktinfo = Console.ReadLine();
+                    newCustomer.Phone = Console.ReadLine();
 
                     Console.Write("Indtast kundens Nummerplade: ");
                     newCar.Nummerplade = Console.ReadLine();
