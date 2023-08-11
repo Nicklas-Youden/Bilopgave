@@ -8,11 +8,19 @@ class Program
         bool running = true;
         while (running)
         {
-            Console.WriteLine("Registrerede kunder:");
-            for (int i = 0; i < customers.Count; i++)
-            {
-                Console.WriteLine("{0}. {1}", i, customers[i].FirstName);
-            }
+			// Viser registeret kunder + tæller
+			Console.WriteLine("Registrerede kunder med nummerplade:");
+
+			// Gennemløb hver registrerede kunde
+			for(int i = 0; i < customers.Count; i++)
+			{
+				// Gennemløb hver bil for den nuværende kunde
+				foreach(var car in customers[i].bil)
+				{
+					// Viser registeret nmummerplader
+					Console.WriteLine("{0}. Nummerplade: {1}", i + 1, car.Nummerplade);
+				}
+			}
 
             Console.WriteLine("\nVelkommen til kundeadministrationssystemet!");
             Console.WriteLine("1. Registrer ny kunde");
@@ -52,50 +60,68 @@ class Program
                     Console.Write("Indtast kundens Moterstørrelse: ");
                     newCar.Størrelse = Console.ReadLine();
 
-                    Console.Write("Indtast kundens Dato: ");
-                    newCar.Dato = Console.ReadLine();
+					Console.Write("Indtast en dato (dd-mm-yyyy): ");
+					string inputDateStr = Console.ReadLine();
 
 
-                    customers.Add(newCustomer);
+					customers.Add(newCustomer);
 
                     Console.Clear();
 
                     Console.WriteLine("Kunde registreret!");
-
-
-
-
-                    
                     break;
 
+				// Indtast nummerplade for at fremvise kundeoplysninger
+				case "2":
+					// Indtast nummerplade
+					Console.Write("Indtast nummerpladen: ");
+					string plateNumber = Console.ReadLine();
+
+					// Opret variabler til at holde styr på funden kunde og bil
+					Customer foundCustomer = null;
+					Vehicle foundCar = null;
+
+					// Gennemgå hver kunde for at finde den passende bil
+					foreach(var customer in customers)
+					{
+						// Gennemgå hver bil for den aktuelle kunde
+						foreach(var car in customer.bil)
+						{
+							// Tjek om nummerpladen på den aktuelle bil matcher den indtastede nummerplade
+							if(car.Nummerplade == plateNumber)
+							{
+								// Gem kunden og bilen, hvis en match er fundet
+								foundCustomer = customer;
+								foundCar = car;
+								break;
+							}
+						}
+						// Hvis en matchende bil allerede er fundet, afslutter vi også gennemgangen af kunder
+						if(foundCar != null)
+							if(foundCar != null)
+								break;
+					}
+					// Hvis en matchende bil blev fundet - vis kundeoplysningerne
+					if(foundCar != null)
+					{
+						Console.WriteLine($"Kunde: {foundCustomer.FirstName} {foundCustomer.LastName}, {foundCustomer.Phone}");
+						Console.WriteLine($"Bil: {foundCar.Mærke} {foundCar.Model}, Nummerplade: {foundCar.Nummerplade}");
+					}
+					else
+					{
+						// Hvis ingen matchende bil blev fundet, vis en fejlmeddelelse
+						Console.WriteLine("Bilen blev ikke fundet.");
+					}
+
+					Console.WriteLine("Tryk på en tast for at fortsætte...");
+					Console.ReadKey();
+
+					break;
 
 
 
-                case "2":
-                    Console.Write("Indtast kundens nummer (0 - {0}): ", customers.Count - 1);
-                    int customerNumber;
-                    if (int.TryParse(Console.ReadLine(), out customerNumber) && customerNumber >= 0 && customerNumber < customers.Count)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Kontaktinfo: ");
-                        Customer customer = customers[customerNumber];
-                        Console.WriteLine("Navn: {0}\nKontaktinfo: {1}", customer.FirstName, customer.Phone);
-                        //Console.WriteLine("Registrerede biler: ");
-                        /*foreach (Car cars in ShowCar.bil)
-                        {
-                            Console.WriteLine("Mærke: {0}, Model: {1}", cars.lave, cars.Model);
-                        }*/
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ugyldigt kundenummer.");
-                    }
-                    break;
 
-
-
-
-                case "3":
+				case "3":
                     running = false;
                     break;
 
